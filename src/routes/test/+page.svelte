@@ -20,7 +20,7 @@
   });
 
   // The actual test starts at different times in the MP3 depending on the speed
-  let startDelaySeconds = $derived(startSpeed === 8 ? 9 : 7);
+  let startDelaySeconds = $derived(startSpeed === 8 ? 8.7 : 7.0);
   const LEVEL_DURATION_SECONDS = 45;
 
   let effectiveTime = $derived(audioCurrentTime - startDelaySeconds);
