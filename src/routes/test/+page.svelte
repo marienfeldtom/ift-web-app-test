@@ -3,6 +3,7 @@
   import { onMount, onDestroy } from 'svelte';
   import { Activity, Footprints } from '@lucide/svelte';
   import { t } from '$lib/i18n.svelte';
+  import { beforeNavigate } from '$app/navigation';
 
   let startSpeed = $state(8);
   let testState = $state<'idle' | 'running' | 'finished'>('idle');
@@ -66,6 +67,21 @@
       audio.src = '';
     }
   });
+
+  beforeNavigate(({ cancel }) => {
+    if (testState === 'running') {
+      if (!confirm(t('test.active.confirm_leave'))) {
+        cancel();
+      }
+    }
+  });
+
+  function handleBeforeUnload(e: BeforeUnloadEvent) {
+    if (testState === 'running') {
+      e.preventDefault();
+      e.returnValue = '';
+    }
+  }
 
   function getAudioSrc() {
     return startSpeed === 8 ? '/40m_en_8.mp3' : '/40m_en_10.mp3';
@@ -171,6 +187,8 @@
     return `${m}:${s}`;
   }
 </script>
+
+<svelte:window onbeforeunload={handleBeforeUnload} />
 
 <svelte:head>
   <title>IFT 30-15 - {t('nav.live_test')}</title>

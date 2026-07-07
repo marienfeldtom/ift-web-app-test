@@ -85,6 +85,7 @@ export const translations = {
     'test.active.finish_btn': 'Test Beenden',
     'test.active.to_results_btn': 'Zu den Ergebnissen',
     'test.active.dropped_out': 'Ausgeschieden',
+    'test.active.confirm_leave': 'Der Test läuft gerade. Bist du sicher, dass du die Seite verlassen möchtest?',
     
     // Results View
     'results.title': 'Test Ergebnisse',
@@ -198,6 +199,7 @@ export const translations = {
     'test.active.finish_btn': 'Finish Test',
     'test.active.to_results_btn': 'To Results',
     'test.active.dropped_out': 'Dropped out',
+    'test.active.confirm_leave': 'The test is currently running. Are you sure you want to leave this page?',
     
     // Results View
     'results.title': 'Test Results',
