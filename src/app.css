@@ -1,0 +1,178 @@
+:root {
+  --bg-color: #0f1115;
+  --surface-color: #1a1d24;
+  --surface-color-light: #242830;
+  --text-primary: #f8f9fa;
+  --text-secondary: #adb5bd;
+  --accent-neon: #00ffcc;
+  --accent-neon-hover: #33ffdb;
+  --accent-primary: #3366ff;
+  --accent-primary-hover: #5c85ff;
+  --accent-danger: #ff4757;
+  --accent-danger-hover: #ff6b81;
+  --border-color: #2e333d;
+  
+  --font-main: 'Inter', system-ui, -apple-system, sans-serif;
+  --border-radius: 12px;
+  --transition: all 0.25s ease-in-out;
+
+  /* VO2max ratings */
+  --rating-poor: #ff4d4f;
+  --rating-fair: #faad14;
+  --rating-good: #52c41a;
+  --rating-excellent: #1890ff;
+  --rating-superior: #722ed1;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-color);
+  background-image: radial-gradient(circle at 50% 0%, rgba(51, 102, 255, 0.1) 0%, transparent 50%);
+  background-attachment: fixed;
+  color: var(--text-primary);
+  font-family: var(--font-main);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+h1, h2, h3, h4 {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+
+h1 {
+  font-size: 2.5rem;
+  background: linear-gradient(90deg, #fff, #adb5bd);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+a {
+  color: var(--accent-neon);
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+a:hover {
+  color: var(--accent-neon-hover);
+}
+
+button, .button {
+  cursor: pointer;
+  font-family: inherit;
+  border: none;
+  border-radius: var(--border-radius);
+  padding: 12px 20px;
+  font-weight: 600;
+  font-size: 14px;
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+button:active, .button:active {
+  transform: scale(0.98);
+}
+
+button.primary, .button.primary {
+  background: linear-gradient(135deg, var(--accent-neon), #00b38f);
+  color: #000;
+  box-shadow: 0 4px 15px rgba(0, 255, 204, 0.15);
+}
+
+button.primary:hover:not(:disabled), .button.primary:hover:not(:disabled) {
+  background: linear-gradient(135deg, var(--accent-neon-hover), #00cca3);
+  box-shadow: 0 6px 20px rgba(0, 255, 204, 0.3);
+  transform: translateY(-2px);
+}
+
+button.primary:disabled, .button.primary.disabled {
+  background: var(--surface-color-light);
+  color: var(--text-secondary);
+  box-shadow: none;
+  cursor: not-allowed;
+  transform: none;
+}
+
+button.danger, .button.danger {
+  background-color: var(--accent-danger);
+  color: #fff;
+}
+
+button.danger:hover:not(:disabled), .button.danger:hover:not(:disabled) {
+  background-color: var(--accent-danger-hover);
+  box-shadow: 0 4px 15px rgba(255, 71, 87, 0.2);
+}
+
+button.secondary, .button.secondary {
+  background-color: var(--surface-color-light);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+}
+
+button.secondary:hover, .button.secondary:hover {
+  background-color: var(--border-color);
+  transform: translateY(-2px);
+}
+
+input, select {
+  background-color: var(--bg-color);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  padding: 12px 16px;
+  border-radius: var(--border-radius);
+  font-family: inherit;
+  font-size: 15px;
+  transition: var(--transition);
+}
+
+input:focus, select:focus {
+  outline: none;
+  border-color: var(--accent-neon);
+  box-shadow: 0 0 0 3px rgba(0, 255, 204, 0.15);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 24px;
+}
+
+.card {
+  background-color: var(--surface-color);
+  border-radius: 16px;
+  border: 1px solid var(--border-color);
+  padding: 32px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Badges for ratings */
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.badge.poor { background: rgba(255, 77, 79, 0.15); color: var(--rating-poor); border: 1px solid var(--rating-poor); }
+.badge.fair { background: rgba(250, 173, 20, 0.15); color: var(--rating-fair); border: 1px solid var(--rating-fair); }
+.badge.good { background: rgba(82, 196, 26, 0.15); color: var(--rating-good); border: 1px solid var(--rating-good); }
+.badge.excellent { background: rgba(24, 144, 255, 0.15); color: var(--rating-excellent); border: 1px solid var(--rating-excellent); }
+.badge.superior { background: rgba(114, 46, 209, 0.15); color: var(--rating-superior); border: 1px solid var(--rating-superior); }
+
+/* Typography */
+.text-muted {
+  color: var(--text-secondary);
+}
