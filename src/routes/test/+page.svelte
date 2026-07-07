@@ -117,16 +117,21 @@
   }
 
   function calculateDropOut(player: Player, speed: number): Player {
+    // Die VIFT ist laut Protokoll die *zuletzt vollständig abgeschlossene* Stufe. 
+    // Wer also auf Stufe 18,5 km/h ausscheidet, bekommt 18,0 km/h.
+    // Falls man direkt auf der ersten Stufe ausscheidet, werten wir das als Startgeschwindigkeit (auch wenn eigentlich keine Stufe beendet wurde).
+    const completedSpeed = Math.max(startSpeed, speed - 0.5);
+
     let vo2 = null;
     if (player.age !== null && player.weight !== null) {
       const g = player.gender === 'male' ? 1 : 2;
-      vo2 = 28.3 - (2.15 * g) - (0.741 * player.age) - (0.0357 * player.weight) + (0.0586 * player.age * speed) + (1.03 * speed);
+      vo2 = 28.3 - (2.15 * g) - (0.741 * player.age) - (0.0357 * player.weight) + (0.0586 * player.age * completedSpeed) + (1.03 * completedSpeed);
     }
     
     return {
       ...player,
       status: 'finished',
-      finalSpeed: speed,
+      finalSpeed: completedSpeed,
       vo2max: vo2 !== null ? Math.round(vo2 * 10) / 10 : null
     };
   }
