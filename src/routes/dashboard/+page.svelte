@@ -10,6 +10,7 @@
   let editingId = $state<string | null>(null);
   let showWarningModal = $state(false);
   let showImageModal = $state(false);
+  let showEmptySquadModal = $state(false);
 
   function requestSave() {
     if (!name) return;
@@ -172,9 +173,15 @@
   </div>
 
   <div class="action-footer">
-    <a href="/test" class="button primary cta-button">
-      <Play size={20} /> {t('dashboard.cta')}
-    </a>
+    {#if $playersStore.length === 0}
+      <button class="button primary cta-button" onclick={() => showEmptySquadModal = true} style="display: flex; align-items: center; gap: 8px;">
+        <Play size={20} /> {t('dashboard.cta')}
+      </button>
+    {:else}
+      <a href="/test" class="button primary cta-button" style="display: flex; align-items: center; gap: 8px;">
+        <Play size={20} /> {t('dashboard.cta')}
+      </a>
+    {/if}
   </div>
 </div>
 
@@ -200,6 +207,20 @@
     <div class="image-modal-content">
       <img src="/erklaerung.png" alt={t('dashboard.img_alt_enlarged')} class="enlarged-image" />
       <button class="secondary close-button" onclick={() => showImageModal = false}>{t('dashboard.modal.close')}</button>
+    </div>
+  </div>
+{/if}
+
+{#if showEmptySquadModal}
+  <div class="modal-backdrop">
+    <div class="modal card">
+      <h2 style="margin-bottom: 16px;">{t('dashboard.modal.empty_squad_title')}</h2>
+      <p style="margin-bottom: 16px; color: var(--text-secondary);">
+        {t('dashboard.modal.empty_squad_desc')}
+      </p>
+      <div class="modal-actions">
+        <button class="primary" onclick={() => showEmptySquadModal = false}>{t('dashboard.modal.close')}</button>
+      </div>
     </div>
   </div>
 {/if}

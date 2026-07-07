@@ -62,6 +62,8 @@ export const translations = {
     'dashboard.modal.cancel': 'Abbrechen',
     'dashboard.modal.save': 'Trotzdem speichern',
     'dashboard.modal.close': 'Schließen',
+    'dashboard.modal.empty_squad_title': 'Kein Kader vorhanden',
+    'dashboard.modal.empty_squad_desc': 'Bitte füge mindestens einen Spieler hinzu, bevor du den Test startest.',
     'dashboard.img_alt': 'IFT 30-15 Test Erklärung Skizze',
     'dashboard.img_alt_enlarged': 'IFT 30-15 Test Erklärung Skizze (vergrößert)',
     
@@ -173,6 +175,8 @@ export const translations = {
     'dashboard.modal.cancel': 'Cancel',
     'dashboard.modal.save': 'Save Anyway',
     'dashboard.modal.close': 'Close',
+    'dashboard.modal.empty_squad_title': 'Empty Squad',
+    'dashboard.modal.empty_squad_desc': 'Please add at least one player before starting the test.',
     'dashboard.img_alt': 'IFT 30-15 Test Explanation Sketch',
     'dashboard.img_alt_enlarged': 'IFT 30-15 Test Explanation Sketch (Enlarged)',
     

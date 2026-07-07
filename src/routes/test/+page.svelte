@@ -13,7 +13,9 @@
 
   $effect(() => {
     if (audio) {
-      audio.volume = volume;
+      // Eine leicht angehobene Kurve (0.75 statt 1.0 linear), damit der Ton im unteren Bereich 
+      // nicht so extrem schnell leise wird (was oft als "zu früh aus" wahrgenommen wird).
+      audio.volume = volume === 0 ? 0 : Math.pow(volume, 0.75);
     }
   });
 
@@ -121,7 +123,7 @@
     // Wer also auf Stufe 18,5 km/h ausscheidet, bekommt 18,0 km/h.
     // Falls man direkt auf der ersten Stufe ausscheidet, werten wir das als Startgeschwindigkeit (auch wenn eigentlich keine Stufe beendet wurde).
     const completedSpeed = Math.max(startSpeed, speed - 0.5);
-    const dropTimeStr = formatTime(audioCurrentTime);
+    const dropTimeStr = formatTime(effectiveTime);
 
     let vo2 = null;
     if (player.age !== null && player.weight !== null) {
@@ -224,7 +226,7 @@
         </div>
         
         <div class="time-overall">
-          {t('test.active.time')}: {formatTime(audioCurrentTime)}
+          {t('test.active.time')}: {formatTime(effectiveTime)}
         </div>
 
         <div class="phase-indicator {isPreparationPhase ? 'prep' : (timeInCurrentLevel < 30 ? 'run' : 'walk')}">
@@ -243,7 +245,10 @@
         </div>
 
         <div class="volume-control">
-          <span class="volume-label">{t('test.active.volume')}</span>
+          <div class="volume-header">
+            <span class="volume-label">{t('test.active.volume')}</span>
+            <span class="volume-value">{Math.round(volume * 100)} %</span>
+          </div>
           <input type="range" min="0" max="1" step="0.01" bind:value={volume} class="volume-slider" />
         </div>
       </div>
@@ -444,7 +449,13 @@
     display: flex;
     flex-direction: column;
     gap: 12px;
-    align-items: flex-start;
+  }
+
+  .volume-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
   }
 
   .volume-label {
@@ -454,8 +465,17 @@
     letter-spacing: 0.05em;
   }
 
+  .volume-value {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--accent-neon);
+    font-variant-numeric: tabular-nums;
+  }
+
   .volume-slider {
     width: 100%;
+    margin: 0;
+    padding: 0;
     accent-color: var(--accent-neon);
     cursor: pointer;
   }
