@@ -12,6 +12,7 @@ export interface Player {
     status: 'active' | 'finished';
     finalSpeed: number | null;
     vo2max: number | null;
+    dropOutTime?: string | null;
 }
 
 const STORAGE_KEY = 'ift_squad_players';

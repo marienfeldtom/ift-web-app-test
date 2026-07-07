@@ -121,6 +121,7 @@
     // Wer also auf Stufe 18,5 km/h ausscheidet, bekommt 18,0 km/h.
     // Falls man direkt auf der ersten Stufe ausscheidet, werten wir das als Startgeschwindigkeit (auch wenn eigentlich keine Stufe beendet wurde).
     const completedSpeed = Math.max(startSpeed, speed - 0.5);
+    const dropTimeStr = formatTime(audioCurrentTime);
 
     let vo2 = null;
     if (player.age !== null && player.weight !== null) {
@@ -132,7 +133,8 @@
       ...player,
       status: 'finished',
       finalSpeed: completedSpeed,
-      vo2max: vo2 !== null ? Math.round(vo2 * 10) / 10 : null
+      vo2max: vo2 !== null ? Math.round(vo2 * 10) / 10 : null,
+      dropOutTime: dropTimeStr
     };
   }
 
@@ -158,6 +160,7 @@
   }
 
   let activePlayers = $derived($playersStore.filter(p => p.status === 'active'));
+  let finishedPlayers = $derived($playersStore.filter(p => p.status === 'finished' && p.finalSpeed !== null));
   
   function formatTime(seconds: number) {
     if (seconds < 0) seconds = 0;
@@ -258,6 +261,19 @@
             <p class="empty-state">-</p>
           {/if}
         </div>
+
+        {#if finishedPlayers.length > 0}
+          <div class="finished-divider"></div>
+          <h2>{t('test.active.dropped_out')} ({finishedPlayers.length})</h2>
+          <div class="active-grid">
+            {#each finishedPlayers as player (player.id)}
+              <div class="player-tile finished-tile">
+                <span class="player-name">{player.name}</span>
+                <span class="player-stats">{player.finalSpeed} km/h - {player.dropOutTime}</span>
+              </div>
+            {/each}
+          </div>
+        {/if}
       </div>
     </div>
   {/if}
@@ -495,6 +511,25 @@
     width: 100%;
     padding: 12px;
     font-size: 16px;
+  }
+
+  .finished-divider {
+    height: 1px;
+    background-color: var(--border-color);
+    margin: 32px 0;
+  }
+
+  .finished-tile {
+    opacity: 0.6;
+    background-color: transparent;
+  }
+
+  .player-stats {
+    font-size: 13px;
+    color: var(--text-secondary);
+    background: var(--surface-color-light);
+    padding: 4px 8px;
+    border-radius: 4px;
   }
 
   .finished-card {

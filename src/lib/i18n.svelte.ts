@@ -82,6 +82,7 @@ export const translations = {
     'test.active.cancel_btn': 'Test Abbrechen',
     'test.active.finish_btn': 'Test Beenden',
     'test.active.to_results_btn': 'Zu den Ergebnissen',
+    'test.active.dropped_out': 'Ausgeschieden',
     
     // Results View
     'results.title': 'Test Ergebnisse',
@@ -192,6 +193,7 @@ export const translations = {
     'test.active.cancel_btn': 'Cancel Test',
     'test.active.finish_btn': 'Finish Test',
     'test.active.to_results_btn': 'To Results',
+    'test.active.dropped_out': 'Dropped out',
     
     // Results View
     'results.title': 'Test Results',
