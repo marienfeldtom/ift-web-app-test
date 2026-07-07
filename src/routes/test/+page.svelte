@@ -1,7 +1,7 @@
 <script lang="ts">
   import { playersStore, type Player } from '$lib/stores';
   import { onMount, onDestroy } from 'svelte';
-  import { Activity, Footprints } from '@lucide/svelte';
+  import { Activity, Footprints, RotateCcw } from '@lucide/svelte';
   import { t } from '$lib/i18n.svelte';
   import { beforeNavigate } from '$app/navigation';
 
@@ -177,6 +177,25 @@
     });
   }
 
+  function undoDropOutPlayer(id: string) {
+    if (testState !== 'running') return;
+    
+    playersStore.update(players => {
+      return players.map(p => {
+        if (p.id === id) {
+          return {
+            ...p,
+            status: 'active',
+            finalSpeed: null,
+            vo2max: null,
+            dropOutTime: null
+          };
+        }
+        return p;
+      });
+    });
+  }
+
   let activePlayers = $derived($playersStore.filter(p => p.status === 'active'));
   let finishedPlayers = $derived($playersStore.filter(p => p.status === 'finished' && p.finalSpeed !== null));
   
@@ -293,6 +312,14 @@
               <div class="player-tile finished-tile">
                 <span class="player-name">{player.name}</span>
                 <span class="player-stats">{player.finalSpeed} km/h - {player.dropOutTime}</span>
+                <button 
+                  class="undo-btn" 
+                  title="Wieder aufnehmen" 
+                  onclick={() => undoDropOutPlayer(player.id)}
+                  aria-label="Wieder aufnehmen"
+                >
+                  <RotateCcw size={14} />
+                </button>
               </div>
             {/each}
           </div>
@@ -560,6 +587,34 @@
   .finished-tile {
     opacity: 0.6;
     background-color: transparent;
+    position: relative;
+  }
+
+  .undo-btn {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    opacity: 0.15;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .finished-tile:hover .undo-btn {
+    opacity: 0.5;
+  }
+
+  .undo-btn:hover {
+    opacity: 1 !important;
+    color: var(--accent-neon);
+    background: rgba(0, 255, 204, 0.1);
   }
 
   .player-stats {
